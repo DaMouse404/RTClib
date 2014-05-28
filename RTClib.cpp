@@ -9,7 +9,7 @@
 #else
  #define PROGMEM
  #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
- #define WIRE Wire1
+ #define WIRE Wire
 #endif
 
 #define DS1307_ADDRESS 0x68
@@ -145,7 +145,7 @@ uint8_t RTC_DS1307::begin(void) {
 
 uint8_t RTC_DS1307::isrunning(void) {
   WIRE.beginTransmission(DS1307_ADDRESS);
-  WIRE.write(0);
+  WIRE.write((byte)0);
   WIRE.endTransmission();
 
   WIRE.requestFrom(DS1307_ADDRESS, 1);
@@ -155,7 +155,7 @@ uint8_t RTC_DS1307::isrunning(void) {
 
 void RTC_DS1307::adjust(const DateTime& dt) {
     WIRE.beginTransmission(DS1307_ADDRESS);
-    WIRE.write(0);
+    WIRE.write((byte)0);
     WIRE.write(bin2bcd(dt.second()));
     WIRE.write(bin2bcd(dt.minute()));
     WIRE.write(bin2bcd(dt.hour()));
@@ -163,13 +163,13 @@ void RTC_DS1307::adjust(const DateTime& dt) {
     WIRE.write(bin2bcd(dt.day()));
     WIRE.write(bin2bcd(dt.month()));
     WIRE.write(bin2bcd(dt.year() - 2000));
-    WIRE.write(0);
+    WIRE.write((byte)0);
     WIRE.endTransmission();
 }
 
 DateTime RTC_DS1307::now() {
   WIRE.beginTransmission(DS1307_ADDRESS);
-  WIRE.write(0);	
+  WIRE.write((byte)0);	
   WIRE.endTransmission();
 
   WIRE.requestFrom(DS1307_ADDRESS, 7);
@@ -188,7 +188,7 @@ DateTime RTC_DS1307::now() {
 
 uint8_t RTC_DS1307::isrunning(void) {
   WIRE.beginTransmission(DS1307_ADDRESS);
-  WIRE.send(0);	
+  WIRE.send((byte)0);	
   WIRE.endTransmission();
 
   WIRE.requestFrom(DS1307_ADDRESS, 1);
@@ -198,7 +198,7 @@ uint8_t RTC_DS1307::isrunning(void) {
 
 void RTC_DS1307::adjust(const DateTime& dt) {
     WIRE.beginTransmission(DS1307_ADDRESS);
-    WIRE.send(0);
+    WIRE.send((byte)0);
     WIRE.send(bin2bcd(dt.second()));
     WIRE.send(bin2bcd(dt.minute()));
     WIRE.send(bin2bcd(dt.hour()));
@@ -206,13 +206,13 @@ void RTC_DS1307::adjust(const DateTime& dt) {
     WIRE.send(bin2bcd(dt.day()));
     WIRE.send(bin2bcd(dt.month()));
     WIRE.send(bin2bcd(dt.year() - 2000));
-    WIRE.send(0);
+    WIRE.send((byte)0);
     WIRE.endTransmission();
 }
 
 DateTime RTC_DS1307::now() {
   WIRE.beginTransmission(DS1307_ADDRESS);
-  WIRE.send(0);	
+  WIRE.send((byte)0);	
   WIRE.endTransmission();
   
   WIRE.requestFrom(DS1307_ADDRESS, 7);
